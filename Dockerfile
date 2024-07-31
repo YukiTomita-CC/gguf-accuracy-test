@@ -11,15 +11,10 @@ RUN apt-get install -y \
 
 WORKDIR /app
 
-RUN git clone https://github.com/ggerganov/llama.cpp && \
-    cd llama.cpp && \
-    cmake -B build -DGGML_CUDA=ON && \
-    cmake --build build --config Release
-
 COPY ./requirements/requirements_server.txt /app/
 
 RUN pip install -r requirements_server.txt
 
 COPY ./src/server/api_server.py /app/
 
-CMD ["python3", "api_server.py"]
+CMD ["/bin/bash"]
