@@ -11,8 +11,8 @@ RUN apt-get install -y \
 
 WORKDIR /app
 
-RUN git clone https://github.com/ggerganov/llama.cpp --branch b3369 /app/llama.cpp && \
-    cd /app/llama.cpp && \
+RUN git clone https://github.com/ggerganov/llama.cpp && \
+    cd llama.cpp && \
     cmake -B build -DGGML_CUDA=ON && \
     cmake --build build --config Release
 
