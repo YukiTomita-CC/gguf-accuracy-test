@@ -26,24 +26,16 @@ def main():
         os.makedirs(f'data/model_responses/{q}', exist_ok=True)
 
         server_client.start_llama_cpp_server(q)
-        sleep(15)
+        sleep(30)
         
         tps_list = llamacpp_client.generate_responses_repeatedly(q, repeat_num=5)
 
         usage_vram = server_client.measure_usage_vram()
         server_client.kill_llama_cpp_server()
 
+        result_file_path = openai_client.create_batch(q)
 
-        batch_id = openai_client.create_batch(q)
-        while True:
-            if openai_client.check_batch_finish(batch_id):
-                break
-
-            sleep(300)
-
-        batch_path = openai_client.download_batch(batch_id)
-
-        data = format_batch(q, batch_path)
+        data = format_batch(q, result_file_path)
 
         google_client.write_to_spreadsheet(
             q,

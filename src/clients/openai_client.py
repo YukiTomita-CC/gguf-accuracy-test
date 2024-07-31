@@ -1,4 +1,5 @@
 import json
+from time import sleep
 
 from datasets import load_dataset
 from openai import OpenAI
@@ -7,8 +8,10 @@ from openai import OpenAI
 class OpenAIClient:
     def __init__(self) -> None:
         self.openai_client = OpenAI()
+        self.batch = None
 
-    def create_batch(self, res_file, output_file_name):
+    def create_batch(self, quantize:str):
+        #TODO: LlamacppClientのgenerate_responses_repeatedlyと同様に選べるように
         dataset = load_dataset("data/test_data")
         test_set = dataset["test"]
 
@@ -54,7 +57,7 @@ class OpenAIClient:
 
         tasks = []
         for n in range(5):
-            with open(res_file + str(n+1) + ".json", 'r', encoding='utf-8') as f:
+            with open(f"data/model_responses/{quantize}/responses_{n+1}.json", 'r', encoding='utf-8') as f:
                 model_response = json.load(f)
 
             for i, example in enumerate(test_set):
@@ -83,6 +86,7 @@ class OpenAIClient:
                 
                 tasks.append(task)
 
+        output_file_name = f"data/batches/upload/{quantize}.jsonl"
         with open(output_file_name, 'w', encoding='utf-8') as file:
             for obj in tasks:
                 file.write(json.dumps(obj, ensure_ascii=False) + '\n')
@@ -92,8 +96,37 @@ class OpenAIClient:
             purpose="batch"
             )
 
-        self.openai_client.batches.create(
+        self.batch = self.openai_client.batches.create(
             input_file_id=batch_file.id,
             endpoint="/v1/chat/completions",
             completion_window="24h"
             )
+        
+        while True:
+            if self._check_batch_finish():
+                break
+
+            sleep(300)
+        
+        result_file_path = self._download_batch(quantize)
+
+        return result_file_path
+    
+    def _check_batch_finish(self):
+        self.batch = self.openai_client.batches.retrieve(self.batch.id)
+
+        if self.batch.status == 'completed':
+            return True
+
+        return False
+
+    def _download_batch(self, quantize:str):
+        result_file_id = self.batch.output_file_id
+        result = self.openai_client.files.content(result_file_id).content
+
+        result_file_name = f"data/batches/download/{quantize}.jsonl"
+
+        with open(result_file_name, 'wb') as file:
+            file.write(result)
+        
+        return result_file_name

@@ -2,6 +2,7 @@ import requests
 
 
 class ServerClient:
+    #TODO: ggufファイルのダウンロード機能がない
     def __init__(self, host="localhost", port=5000):
         self.server_url = f"http://{host}:{port}"
 

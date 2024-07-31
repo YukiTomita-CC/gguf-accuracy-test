@@ -58,7 +58,8 @@ class LlamacppClient:
                         "output": output
                     })
 
-            with open(f'data/model_responses/{quantize}/response_{n+1}.json', 'w', encoding='utf-8') as f:
+            #WARN: OpenAIClientが参照するpathと一致させる必要があるがどちらにもハードコーディングになっている
+            with open(f'data/model_responses/{quantize}/responses_{n+1}.json', 'w', encoding='utf-8') as f:
                 json.dump({"responses": responses}, f, ensure_ascii=False, indent=2)
         
         return tps_list

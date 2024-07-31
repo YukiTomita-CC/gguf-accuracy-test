@@ -10,14 +10,14 @@ app = Flask(__name__)
 @app.route('/start_llama_cpp_server', methods=['POST'])
 def start_llama_cpp_server():
     quantize = request.json['quantize']
-    cmd = f"./llama.cpp/build/bin/llama-server -m ./llama.cpp/models/Llama-3-Swallow-8B-Instruct-v0.1.{quantize}.gguf -c 1024 -n 1024 -ngl 33 --host 0.0.0.0 --port 8085"
+    cmd = f"./llama.cpp/build/bin/llama-server -m ./models/Llama-3-Swallow-8B-Instruct-v0.1.{quantize}.gguf -c 1024 -n 1024 -ngl 33 --host 0.0.0.0 --port 8080"
     subprocess.Popen(cmd, shell=True)
     return jsonify({"status": "success", "message": "Server started"})
 
 @app.route('/kill_llama_cpp_server', methods=['POST'])
 def kill_llama_cpp_server():
     for proc in psutil.process_iter(['pid', 'name', 'cmdline']):
-        if 'llama-server' in proc.info['name'] and '8085' in proc.info['cmdline']:
+        if 'llama-server' in proc.info['name'] and '8080' in proc.info['cmdline']:
             proc.terminate()
             return jsonify({"status": "success", "message": "Server terminated"})
     return jsonify({"status": "error", "message": "Server not found"})
@@ -25,7 +25,7 @@ def kill_llama_cpp_server():
 @app.route('/delete_gguf', methods=['POST'])
 def delete_gguf():
     quantize = request.json['quantize']
-    file_path = f"./llama.cpp/models/Llama-3-Swallow-8B-Instruct-v0.1.{quantize}.gguf"
+    file_path = f"./models/Llama-3-Swallow-8B-Instruct-v0.1.{quantize}.gguf"
     try:
         os.remove(file_path)
         return jsonify({"status": "success", "message": "File deleted"})

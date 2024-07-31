@@ -1,0 +1,14 @@
+services:
+  gguf-accuracy-test:
+    build: .
+    ports:
+      - "8080:8080"
+      - "5050:5050"
+    volumes:
+      - ./models:/app/models
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              capabilities: [gpu]
