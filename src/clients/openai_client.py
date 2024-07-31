@@ -58,14 +58,15 @@ class OpenAIClient:
         tasks = []
         for n in range(5):
             with open(f"data/model_responses/{quantize}/responses_{n+1}.json", 'r', encoding='utf-8') as f:
-                model_response = json.load(f)
+                j = json.load(f)
+                model_response = j["responses"]
 
             for i, example in enumerate(test_set):
                 content = evaluation_prompt.format(
                     input_text=example["input"],
                     output_text=example["output"],
                     eval_aspect=example["eval_aspect"],
-                    pred=model_response[str(i)]["output"]
+                    pred=model_response[i]["output"]
                 )
                 
                 task = {
@@ -103,6 +104,7 @@ class OpenAIClient:
             )
         
         while True:
+            print("check")
             if self._check_batch_finish():
                 break
 
