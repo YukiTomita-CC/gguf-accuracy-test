@@ -20,7 +20,7 @@ def main():
     openai_client = OpenAIClient()
     google_client = GoogleSSClient()
 
-    quantize_methods = ['Q8_0', 'Q6_K', ...]
+    quantize_methods = ['Q8_0']
     for q in quantize_methods:
         os.makedirs(f'data/eval_results/{q}', exist_ok=True)
         os.makedirs(f'data/model_responses/{q}', exist_ok=True)
