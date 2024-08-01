@@ -20,7 +20,11 @@ def main():
     openai_client = OpenAIClient()
     google_client = GoogleSSClient()
 
-    quantize_methods = ['Q8_0']
+    quantize_methods = [
+        "Q6_K", "Q5_K_S", "Q5_K_M", "Q4_K_S", "Q4_K_M", "IQ4_XS", "IQ4_NL",
+        "Q3_K_S", "Q3_K_M", "Q3_K_L", "IQ3_XXS", "IQ3_XS", "IQ3_S", "IQ3_M",
+        "Q2_K_S", "Q2_K", "IQ2_XXS", "IQ2_XS", "IQ2_S", "IQ2_M", "IQ1_S", "IQ1_M"
+    ]
     for q in quantize_methods:
         os.makedirs(f'data/eval_results/{q}', exist_ok=True)
         os.makedirs(f'data/model_responses/{q}', exist_ok=True)
@@ -43,7 +47,8 @@ def main():
             data["non_ja_responses"],
             data["infinite_repetitions"],
             tps_list,
-            usage_vram)
+            usage_vram,
+            prefix="")
 
         server_client.delete_gguf(q)
 

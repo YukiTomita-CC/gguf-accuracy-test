@@ -22,8 +22,12 @@ class GoogleSSClient:
             non_ja_responses: float,
             infinite_repetitions: float,
             tps_list: list[float],
-            usage_vram: float
+            usage_vram: float,
+            prefix: str=""
             ):
+        
+        if prefix:
+            quant = f"{prefix}-{quant}"
 
         quantization_methods = self.worksheet.col_values(2)
         for i, q in enumerate(quantization_methods):
