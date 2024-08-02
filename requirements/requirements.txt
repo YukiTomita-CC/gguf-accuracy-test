@@ -3,3 +3,6 @@ datasets==2.20.0
 gspread==6.1.2
 openai==1.37.1
 python-dotenv==1.0.1
+matplotlib==3.9.1
+seaborn==0.13.2
+adjustText==1.2.0

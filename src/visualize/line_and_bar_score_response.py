@@ -31,7 +31,6 @@ ax2.bar(np.arange(len(df)) + width/2, df['infinite_repetitions'], width, label='
 ax2.set_ylim(0, 50)
 ax2.tick_params(axis='y', labelcolor='tab:blue')
 
-plt.title('Average Score and Abnormal Responses by Quantization Method')
 fig.tight_layout()
 
 lines1, labels1 = ax1.get_legend_handles_labels()
