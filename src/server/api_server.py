@@ -10,7 +10,10 @@ app = Flask(__name__)
 @app.route('/start_llama_cpp_server', methods=['POST'])
 def start_llama_cpp_server():
     quantize = request.json['quantize']
-    cmd = f"./llama.cpp/build/bin/llama-server -m ./models/quants/model_{quantize}.gguf -c 1024 -n 1024 -ngl 81 --host localhost --port 8080"
+    if quantize == "F16":
+        cmd = f"./llama.cpp/build/bin/llama-server -m ./model_{quantize}.gguf -c 1024 -n 1024 -ngl 81 --host localhost --port 8080"
+    else:
+        cmd = f"./llama.cpp/build/bin/llama-server -m ./models/quants/model_{quantize}.gguf -c 1024 -n 1024 -ngl 81 --host localhost --port 8080"
     subprocess.Popen(cmd, shell=True)
     return jsonify({"status": "success", "message": "Server started"})
 
