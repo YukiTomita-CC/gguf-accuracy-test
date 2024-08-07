@@ -9,8 +9,8 @@ from datasets import load_dataset
 
 class ResponsesCreater:
     def __init__(self) -> None:
-        self.model = AutoModelForCausalLM.from_pretrained("cyberagent/Llama-3.1-70B-Japanese-Instruct-2407", device_map="auto", torch_dtype=torch.bfloat16)
-        self.tokenizer = AutoTokenizer.from_pretrained("cyberagent/Llama-3.1-70B-Japanese-Instruct-2407")
+        self.model = AutoModelForCausalLM.from_pretrained("./models", device_map="auto", torch_dtype=torch.bfloat16)
+        self.tokenizer = AutoTokenizer.from_pretrained("./models")
 
         self.streamer = TextStreamer(self.tokenizer, skip_prompt=True, skip_special_tokens=True)
 
@@ -67,3 +67,9 @@ class ResponsesCreater:
                 json.dump({"responses": responses}, f, ensure_ascii=False, indent=2)
         
         return tps_list
+
+
+if __name__ == "__main__":
+    creater = ResponsesCreater()
+
+    creater.generate_responses_repeatedly("original")

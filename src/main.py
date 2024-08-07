@@ -18,11 +18,13 @@ def main():
     # openai_client = OpenAIClient()
     google_client = GoogleSSClient()
 
-    quantize_methods = [
-        "Q8_0", "Q6_K", "Q5_0", "Q5_1", "Q5_K_S", "Q5_K_M",
-        "Q4_0", "Q4_1", "Q4_K_S", "Q4_K_M",
-        "Q3_K_S", "Q3_K_M", "Q3_K_L", "Q2_K"
-    ]
+    quantize_methods = ["F16"]
+
+    # quantize_methods = [
+    #     "Q8_0", "Q6_K", "Q5_0", "Q5_1", "Q5_K_S", "Q5_K_M",
+    #     "Q4_0", "Q4_1", "Q4_K_S", "Q4_K_M",
+    #     "Q3_K_S", "Q3_K_M", "Q3_K_L", "Q2_K"
+    # ]
 
     # quantize_methods = [
     #     "Q6_K", "Q5_K_S", "Q5_K_M", "Q4_K_S", "Q4_K_M", "IQ4_XS", "IQ4_NL",
@@ -55,7 +57,7 @@ def main():
             usage_vram,
             prefix="")
 
-        server_client.delete_gguf(q)
+        # server_client.delete_gguf(q)
 
 
 if __name__ == "__main__":
