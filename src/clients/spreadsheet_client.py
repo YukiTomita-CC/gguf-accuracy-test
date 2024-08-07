@@ -18,9 +18,9 @@ class GoogleSSClient:
     def write_to_spreadsheet(
             self,
             quant: str,
-            scores: list[float],
-            non_ja_responses: float,
-            infinite_repetitions: float,
+            # scores: list[float],
+            # non_ja_responses: float,
+            # infinite_repetitions: float,
             tps_list: list[float],
             usage_vram: float,
             prefix: str=""
@@ -36,11 +36,11 @@ class GoogleSSClient:
         
         target_row = i + 1
 
-        for n, score in enumerate(scores):
-            self.worksheet.update_cell(target_row, 5 + n, score)
+        # for n, score in enumerate(scores):
+        #     self.worksheet.update_cell(target_row, 5 + n, score)
         
-        self.worksheet.update_cell(target_row, 14, non_ja_responses)
-        self.worksheet.update_cell(target_row, 15, infinite_repetitions)
+        # self.worksheet.update_cell(target_row, 14, non_ja_responses)
+        # self.worksheet.update_cell(target_row, 15, infinite_repetitions)
 
         for n, tps in enumerate(tps_list):
             self.worksheet.update_cell(target_row, 16 + n, tps)
