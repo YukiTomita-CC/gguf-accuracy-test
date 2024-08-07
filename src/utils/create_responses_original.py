@@ -24,6 +24,7 @@ class ResponsesCreater:
         start_time = time.time()
         output_ids = self.model.generate(input_ids,
             max_new_tokens=1024,
+            repetition_penalty=1.2,
             streamer=self.streamer
             )
         end_time = time.time()
@@ -66,10 +67,10 @@ class ResponsesCreater:
             with open(f'data/model_responses/{quantize}/responses_{n+1}.json', 'w', encoding='utf-8') as f:
                 json.dump({"responses": responses}, f, ensure_ascii=False, indent=2)
         
-        return tps_list
+        print(tps_list)
 
 
 if __name__ == "__main__":
     creater = ResponsesCreater()
 
-    creater.generate_responses_repeatedly("original")
+    creater.generate_responses_repeatedly("original", repeat_num=1)
