@@ -37,7 +37,7 @@ def main():
         os.makedirs(f'data/model_responses/{q}', exist_ok=True)
 
         server_client.start_llama_cpp_server(q)
-        sleep(30)
+        sleep(600)
         
         tps_list = llamacpp_client.generate_responses_repeatedly(q, repeat_num=5)
 
@@ -48,14 +48,14 @@ def main():
 
         # data = format_batch(q, result_file_path)
 
-        google_client.write_to_spreadsheet(
-            q,
-            # data["scores"],
-            # data["non_ja_responses"],
-            # data["infinite_repetitions"],
-            tps_list,
-            usage_vram,
-            prefix="")
+        # google_client.write_to_spreadsheet(
+        #     q,
+        #     data["scores"],
+        #     data["non_ja_responses"],
+        #     data["infinite_repetitions"],
+        #     tps_list,
+        #     usage_vram,
+        #     prefix="")
 
         # server_client.delete_gguf(q)
 
