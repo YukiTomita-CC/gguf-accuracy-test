@@ -1,3 +1,4 @@
+import argparse
 import os
 from time import sleep
 
@@ -10,15 +11,15 @@ from clients.spreadsheet_client import GoogleSSClient
 # from utils.batch_file_formatter import format_batch
 
 
-def main():
+def main(quantize:str, port1:int, port2:int):
     load_dotenv()
 
-    server_client = ServerClient()
-    llamacpp_client = LlamacppClient()
+    server_client = ServerClient(port=port1)
+    llamacpp_client = LlamacppClient(port=port2)
     # openai_client = OpenAIClient()
     # google_client = GoogleSSClient()
 
-    quantize_methods = ["F16"]
+    quantize_methods = [quantize]
 
     # quantize_methods = [
     #     "Q8_0", "Q6_K", "Q5_0", "Q5_1", "Q5_K_S", "Q5_K_M",
@@ -48,6 +49,9 @@ def main():
 
         # data = format_batch(q, result_file_path)
 
+        print(tps_list)
+        print(usage_vram)
+
         # google_client.write_to_spreadsheet(
         #     q,
         #     data["scores"],
@@ -57,8 +61,16 @@ def main():
         #     usage_vram,
         #     prefix="")
 
-        # server_client.delete_gguf(q)
+        server_client.delete_gguf(q)
 
 
 if __name__ == "__main__":
-    main()
+    parser = argparse.ArgumentParser(description='Run the app with specified port and quantization size.')
+
+    parser.add_argument('--port1', type=int, default=5000, help='Port to run the flask server on (default: 5000)')
+    parser.add_argument('--port2', type=int, default=8080, help='Port to run the llamacpp server on (default: 8080)')
+    parser.add_argument('quantization_size', type=str, help='Quantization size for the model (e.g., Q8_0, Q4_K_M)')
+
+    args = parser.parse_args()
+
+    main(port1=args.port1, port2=args.port2, quantize=args.quantization_size)
