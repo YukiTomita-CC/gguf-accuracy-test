@@ -16,7 +16,7 @@ def main():
     server_client = ServerClient()
     llamacpp_client = LlamacppClient()
     # openai_client = OpenAIClient()
-    google_client = GoogleSSClient()
+    # google_client = GoogleSSClient()
 
     quantize_methods = ["F16"]
 
