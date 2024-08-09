@@ -8,7 +8,7 @@ def main(quantize:str):
 
     api = HfApi()
 
-    for i in range(5):
+    for i in range(1, 6):
         api.upload_file(
             path_or_fileobj=f"./data/model_responses/{quantize}/responses_{i}.json",
             path_in_repo=f"/non-quantize/model_responses/{quantize}/responses_{i}.json",
