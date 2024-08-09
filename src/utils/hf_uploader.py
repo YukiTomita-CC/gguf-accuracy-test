@@ -11,7 +11,7 @@ def main(quantize:str):
     for i in range(1, 6):
         api.upload_file(
             path_or_fileobj=f"./data/model_responses/{quantize}/responses_{i}.json",
-            path_in_repo=f"/non-quantize/model_responses/{quantize}/responses_{i}.json",
+            path_in_repo=f"non-quantize/model_responses/{quantize}/responses_{i}.json",
             repo_id="YukiTomita-CC/temp_data",
             repo_type="dataset",
         )
