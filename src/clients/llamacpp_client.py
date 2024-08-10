@@ -19,7 +19,8 @@ class LlamacppClient:
             data=json.dumps({
                 'prompt': self._convert_llama3_prompt(message),
                 'temperature': 1.0,
-                'top_p': 1.0
+                'top_p': 1.0,
+                'repeat-penalty': 1.1
             })
         )
 
@@ -67,7 +68,7 @@ class LlamacppClient:
     def _convert_llama3_prompt(self, message:str) -> str:
         prompt = f"""<|start_header_id|>system<|end_header_id|>
 
-<|eot_id|><|start_header_id|>user<|end_header_id|>
+あなたは誠実で優秀な日本人のアシスタントです。<|eot_id|><|start_header_id|>user<|end_header_id|>
 
 {message}<|eot_id|><|start_header_id|>assistant<|end_header_id|>
 
