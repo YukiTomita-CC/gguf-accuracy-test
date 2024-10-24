@@ -31,13 +31,12 @@ class HFClient:
         
         output = self.tokenizer.decode(output_ids[0][input_ids.shape[-1]:], skip_special_tokens=True)
 
-        print(f"Input: {message}")
-        print(f"Output: {output}")
-        print(f"all tokens: {len(output_ids[0])}")
-        print(f"input tokens: {len(input_ids[0])}")
-        print(f"output tokens: {len(output_ids[0][input_ids.shape[-1]:])}")
-        print("Check 'all tokens = input tokens + output tokens'")
-
+        # print(f"Input: {message}")
+        # print(f"Output: {output}")
+        # print(f"all tokens: {len(output_ids[0])}")
+        # print(f"input tokens: {len(input_ids[0])}")
+        # print(f"output tokens: {len(output_ids[0][input_ids.shape[-1]:])}")
+        # print("Check 'all tokens = input tokens + output tokens'")
 
         content = output
         tokens_per_second = round(len(output_ids[0][input_ids.shape[-1]:]) / (end - start), 2)
@@ -72,13 +71,13 @@ class HFClient:
                         "output": output
                     })
                 
-                break
+                # break
 
             #WARN: OpenAIClientが参照するpathと一致させる必要があるがどちらにもハードコーディングになっている
             with open(f'data/model_responses/{quantize}/responses_{n+1}.json', 'w', encoding='utf-8') as f:
                 json.dump({"responses": responses}, f, ensure_ascii=False, indent=2)
             
-            break
+            # break
         
         return tps_list
 
