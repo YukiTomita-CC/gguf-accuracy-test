@@ -6,3 +6,4 @@ python-dotenv==1.0.1
 matplotlib==3.9.1
 seaborn==0.13.2
 adjustText==1.2.0
+transformers==4.42.3

@@ -108,7 +108,7 @@ class OpenAIClient:
             if self._check_batch_finish():
                 break
 
-            sleep(300)
+            sleep(30)
         
         result_file_path = self._download_batch(quantize)
 
