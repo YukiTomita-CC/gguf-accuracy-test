@@ -21,7 +21,7 @@ def main():
     # google_client = GoogleSSClient()
 
     quantize_methods = [
-        "bf16", "Q6_K", "Q5_K_M", "Q4_K_M"
+        "Q4_K_M", "Q5_K_M", "Q6_K", "bf16"
     ]
     for q in quantize_methods:
         os.makedirs(f'data/eval_results/{q}', exist_ok=True)
@@ -55,7 +55,7 @@ def main():
         #     usage_vram,
         #     prefix="")
 
-        server_client.delete_gguf(q)
+        # server_client.delete_gguf(q)
 
 
 if __name__ == "__main__":

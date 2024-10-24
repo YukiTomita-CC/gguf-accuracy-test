@@ -17,9 +17,10 @@ class LlamacppClient:
                 'Content-Type': 'application/json'
             },
             data=json.dumps({
-                'prompt': self._convert_llama3_prompt(message),
-                'temperature': 0.6,
-                'top_p': 0.9
+                'prompt': self._convert_calm3_prompt(message),
+                'temperature': 0.5,
+                'top_p': 1.0,
+                'top_k': 50,
             })
         )
 
@@ -64,12 +65,12 @@ class LlamacppClient:
         
         return tps_list
 
-    def _convert_llama3_prompt(self, message:str) -> str:
-        prompt = f"""<|start_header_id|>system<|end_header_id|>
-
-あなたは誠実で優秀な日本人のアシスタントです。userから特別指示がない限り日本語で回答してください。<|eot_id|><|start_header_id|>user<|end_header_id|>
-
-{message}<|eot_id|><|start_header_id|>assistant<|end_header_id|>
-
+    def _convert_calm3_prompt(self, message:str) -> str:
+        prompt = f"""<|im_start|>system
+あなたは親切なAIアシスタントです。<|im_end|>
+<|im_start|>user
+{message}<|im_end|>
+<|im_start|>assistant
 """
+        
         return prompt
